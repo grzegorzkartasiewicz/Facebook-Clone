@@ -1,9 +1,8 @@
-package com.grzegorzkartasiewicz.user;
+package com.grzegorzkartasiewicz.post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface SqlUserRepository extends UserRepository, JpaRepository<User,Integer> {
-
+interface SqlPostRepository extends PostRepository, JpaRepository<Post,Integer> {
 }

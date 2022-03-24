@@ -1,4 +1,4 @@
-package com.grzegorzkartasiewicz.user;
+package com.grzegorzkartasiewicz.post;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,26 +12,25 @@ import java.net.URI;
 import java.util.List;
 
 @Controller
-@RequestMapping("/users")
-class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(User.class);
-    private final UserRepository repository;
+@RequestMapping("/posts")
+class PostController {
+    private static final Logger logger = LoggerFactory.getLogger(Post.class);
+    private final PostRepository repository;
 
-    UserController(UserRepository repository) {
+    PostController(PostRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping
-    ResponseEntity<List<User>> readAllUsers(){
-        logger.info("Exposing all users!");
+    ResponseEntity<List<Post>> readAllPosts(){
+        logger.info("Exposing all posts!");
         return ResponseEntity.ok(repository.findAll());
     }
     @PostMapping
-    ResponseEntity<User> createUser(User newUser){
-        logger.info("Adding new user!");
-        var result = repository.save(newUser);
-        var uri = "users/"+result.getId();
+    ResponseEntity<Post> createPost(Post newPost){
+        logger.info("Adding new post!");
+        var result = repository.save(newPost);
+        var uri = "posts/"+result.getId();
         return ResponseEntity.created(URI.create(uri)).build();
     }
-
 }

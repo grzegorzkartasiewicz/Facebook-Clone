@@ -1,23 +1,27 @@
 package com.grzegorzkartasiewicz.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.grzegorzkartasiewicz.post.Post;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     @NotBlank(message = "User must have name")
-    String name;
+    private String name;
     @NotBlank(message = "User must have surname")
-    String surname;
+    private String surname;
     @NotBlank(message = "User must have age")
-    int age;
-    //TODO posts
+    private int age;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private List<Post> posts;
+
     public User(){}
 
     public int getId() {
@@ -50,5 +54,13 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
