@@ -19,7 +19,7 @@ public class User {
     private String surname;
     @NotBlank(message = "User must have age")
     private int age;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts;
 
     public User(){}

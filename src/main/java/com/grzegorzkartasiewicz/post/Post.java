@@ -15,13 +15,13 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
     private LocalDateTime time;
     @NotBlank(message = "Description can not be empty!")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "posts")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "post")
     private List<Comment> comments;
 
 
