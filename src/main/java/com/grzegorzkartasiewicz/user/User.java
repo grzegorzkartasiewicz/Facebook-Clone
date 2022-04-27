@@ -1,5 +1,7 @@
 package com.grzegorzkartasiewicz.user;
 
+import com.grzegorzkartasiewicz.comment.Comment;
+import com.grzegorzkartasiewicz.login.Login;
 import com.grzegorzkartasiewicz.post.Post;
 
 import javax.persistence.*;
@@ -17,12 +19,28 @@ public class User {
     private String name;
     @NotBlank(message = "User must have surname")
     private String surname;
-    @NotBlank(message = "User must have age")
     private int age;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Post> posts;
+    private List<Post> posts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user")
+    private Login login;
+
 
     public User(){}
+
+    public User(int id, String name, String surname, int age, List<Post> posts, List<Comment> comments, Login login) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.posts = posts;
+        this.comments = comments;
+        this.login = login;
+    }
 
     public int getId() {
         return id;
@@ -62,5 +80,13 @@ public class User {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

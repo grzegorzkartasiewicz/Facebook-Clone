@@ -7,6 +7,9 @@ import com.grzegorzkartasiewicz.user.User;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,19 +18,24 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime time;
+    private String time;
     @NotBlank(message = "Description can not be empty!")
     private String description;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "post")
-    private List<Comment> comments;
-
-
-
+    private List<Comment> comments = new ArrayList<>();
 
     public Post() {
+    }
+
+    public Post(int id, String time, String description, User user, List<Comment> comments) {
+        this.id = id;
+        this.time = time;
+        this.description = description;
+        this.user = user;
+        this.comments = comments;
     }
 
     public int getId() {
@@ -38,12 +46,8 @@ public class Post {
         this.id = id;
     }
 
-    public LocalDateTime getTime() {
+    public String getTime() {
         return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
     }
 
     public String getDescription() {
@@ -54,6 +58,14 @@ public class Post {
         this.description = description;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     public User getUser() {
         return user;
     }
@@ -62,11 +74,8 @@ public class Post {
         this.user = user;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    @PrePersist
+    void prePersist(){
+        time = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT,FormatStyle.SHORT));
     }
 }
