@@ -68,12 +68,12 @@ class LoginController implements ErrorController {
     String signUpUser(HttpSession session, Model model, @ModelAttribute("login") @Valid Login newLogin, BindingResult bindingResult){
         logger.info("Signing up new user!");
         if(bindingResult.hasErrors()){
+            model.addAttribute("login",new Login());
             return "login";
         }
         repository.save(newLogin);
         newLogin.setUser(service.signInUser(newLogin.getUser()));
         session.setAttribute("user", newLogin.getUser());
-        model.addAttribute("login",new Login());
-        return "redirect:/posts/"+newLogin.getUser().getId();
+        return "redirect:/posts/";
     }
 }
