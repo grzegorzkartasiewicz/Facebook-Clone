@@ -43,7 +43,7 @@ public class UserService {
         return repository.findAll().stream().filter(user -> user.getName().toLowerCase().contains(search.toLowerCase()) || user.getSurname().toLowerCase().contains(search.toLowerCase())).toList();
     }
 
-    public int invalid_Method(){
+    public int invalidMethod(){
         if(true){
             return "invalid type";
         }
