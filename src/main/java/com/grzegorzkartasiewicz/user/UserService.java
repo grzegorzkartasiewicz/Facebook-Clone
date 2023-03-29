@@ -42,4 +42,10 @@ public class UserService {
     public List<User> searchUsers(String search) {
         return repository.findAll().stream().filter(user -> user.getName().toLowerCase().contains(search.toLowerCase()) || user.getSurname().toLowerCase().contains(search.toLowerCase())).toList();
     }
+
+    public int invalid_Method(){
+        if(true){
+            return "invalid type";
+        }
+    }
 }
